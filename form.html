@@ -1,0 +1,71 @@
+<html>
+
+  <head>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+
+    var subArr={};
+
+      
+      // get all input fields on form and submit them
+
+      function supa(){
+
+        $('form input').each(function(){
+
+          thisID = $(this).attr('id');
+          thisVal = $(this).attr.val();
+          subArr[thisId] = thisVal;
+
+
+        })
+
+        $.ajax({
+          'url':'index.php',
+          'data'.subArr,
+          'complete':function(transport){
+            resp = $.parseJSON(transport.responseText);
+            if(resp['status'] =="fail"){
+              alert("payment failed");
+            } 
+
+            else if(resp['status'] =="success"){
+              alert("payment processed")
+
+              else{
+                alert("something went wrong")
+              }
+            }
+          }
+
+
+      }
+
+      </script>
+
+
+  </head>
+
+
+  <body>
+
+    <form action="javascript:supa()">
+
+      <input type="text" id="number" placeholder="cc number">
+      <input type="text" id="expMonth" placeholder="cc exp month (as number)">
+      <input type="text" id="expYear" placeholder="cc exp year (as number)">
+      <input type="text" id="ccv" placeholder="ccv">
+      <input type="text" id="amount" placeholder="amount">
+
+      <input type="submit" value="process payment">
+      
+
+
+    </form>
+
+
+  </body>
+
+
+</html>
